@@ -27,12 +27,9 @@ Then visit `http://localhost:4173`.
 
 ## Deployment
 
-This repo includes a GitHub Pages workflow at `.github/workflows/pages.yml`. After pushing to GitHub:
+The repository is configured for GitHub Pages from the `main` branch at the repository root. Pushes to `main` publish the static site at:
 
-1. Open the repository on GitHub.
-2. Go to `Settings` > `Pages`.
-3. Set source to `GitHub Actions`.
-4. The included workflow will publish the static site on pushes to `main`.
+https://mohan143-web.github.io/fidelity-investment-insights/
 
 ## Project Notes
 
