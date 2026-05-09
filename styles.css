@@ -1,0 +1,548 @@
+:root {
+  color-scheme: light;
+  --bg: #eef3f0;
+  --ink: #17211c;
+  --muted: #66716a;
+  --panel: #ffffff;
+  --line: #d8e0da;
+  --accent: #196b69;
+  --accent-strong: #0f4f4c;
+  --gold: #c99728;
+  --red: #b54842;
+  --green: #237a4b;
+  --blue: #426aa8;
+  --shadow: 0 18px 60px rgba(25, 43, 35, 0.12);
+  --radius: 8px;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.65), rgba(255, 255, 255, 0) 28rem),
+    radial-gradient(circle at top left, rgba(25, 107, 105, 0.12), transparent 24rem),
+    var(--bg);
+  color: var(--ink);
+}
+
+button,
+input,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.25rem clamp(1rem, 3vw, 2rem);
+  border-bottom: 1px solid rgba(216, 224, 218, 0.8);
+  background: rgba(255, 255, 255, 0.78);
+  backdrop-filter: blur(18px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.topbar h1,
+.panel-heading h2,
+.surface-heading h2 {
+  margin: 0;
+}
+
+.topbar h1 {
+  font-size: clamp(1.25rem, 2vw, 1.8rem);
+  line-height: 1.1;
+}
+
+.eyebrow {
+  color: var(--accent-strong);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0;
+  margin: 0 0 0.28rem;
+  text-transform: uppercase;
+}
+
+.topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.primary-button,
+.icon-button {
+  border: 1px solid transparent;
+  border-radius: var(--radius);
+  min-height: 2.5rem;
+  transition:
+    transform 160ms ease,
+    background 160ms ease,
+    border-color 160ms ease;
+}
+
+.primary-button {
+  background: var(--accent);
+  color: white;
+  font-weight: 750;
+  padding: 0.7rem 1rem;
+}
+
+.icon-button {
+  align-items: center;
+  background: #f7faf8;
+  border-color: var(--line);
+  color: var(--ink);
+  display: inline-flex;
+  justify-content: center;
+  min-width: 2.5rem;
+}
+
+.icon-button svg {
+  fill: none;
+  height: 1.05rem;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 2.2;
+  width: 1.05rem;
+}
+
+.primary-button:hover,
+.icon-button:hover {
+  transform: translateY(-1px);
+}
+
+.primary-button:hover {
+  background: var(--accent-strong);
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: minmax(18rem, 24rem) minmax(0, 1fr);
+  gap: 1rem;
+  padding: clamp(1rem, 3vw, 2rem);
+}
+
+.planner-panel,
+.tool-surface,
+.metric-card {
+  background: rgba(255, 255, 255, 0.92);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.planner-panel {
+  align-self: start;
+  display: grid;
+  gap: 1.2rem;
+  padding: 1rem;
+  position: sticky;
+  top: 5.5rem;
+}
+
+.panel-heading,
+.surface-heading {
+  align-items: start;
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.status-pill {
+  background: rgba(25, 107, 105, 0.1);
+  border: 1px solid rgba(25, 107, 105, 0.22);
+  border-radius: 999px;
+  color: var(--accent-strong);
+  font-size: 0.75rem;
+  font-weight: 800;
+  padding: 0.3rem 0.55rem;
+  white-space: nowrap;
+}
+
+.status-pill.neutral {
+  background: rgba(201, 151, 40, 0.12);
+  border-color: rgba(201, 151, 40, 0.28);
+  color: #7d5810;
+}
+
+.control-grid {
+  display: grid;
+  gap: 0.8rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+label {
+  color: var(--muted);
+  display: grid;
+  font-size: 0.78rem;
+  font-weight: 750;
+  gap: 0.35rem;
+}
+
+input,
+textarea {
+  background: #fbfdfb;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--ink);
+  min-width: 0;
+  outline: none;
+}
+
+input {
+  min-height: 2.35rem;
+  padding: 0 0.6rem;
+}
+
+input:focus,
+textarea:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(25, 107, 105, 0.12);
+}
+
+.segmented-control {
+  background: #edf4f1;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  display: grid;
+  gap: 0.25rem;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 0.25rem;
+}
+
+.segment {
+  background: transparent;
+  border: 0;
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 800;
+  min-height: 2rem;
+}
+
+.segment.is-active {
+  background: #fff;
+  box-shadow: 0 5px 16px rgba(25, 43, 35, 0.1);
+  color: var(--accent-strong);
+}
+
+.slider-row {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.slider-control {
+  align-items: center;
+  display: grid;
+  gap: 0.65rem;
+  grid-template-columns: minmax(0, 1fr) 3.8rem;
+}
+
+input[type="range"] {
+  accent-color: var(--accent);
+  padding: 0;
+}
+
+output {
+  color: var(--accent-strong);
+  font-weight: 850;
+  text-align: right;
+}
+
+.dashboard {
+  display: grid;
+  gap: 1rem;
+}
+
+.metric-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.metric-card {
+  display: grid;
+  gap: 0.3rem;
+  min-height: 8.4rem;
+  padding: 1rem;
+}
+
+.metric-card p,
+.metric-card span {
+  color: var(--muted);
+  margin: 0;
+}
+
+.metric-card p {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.metric-card strong {
+  color: var(--ink);
+  font-size: clamp(1.45rem, 2.2vw, 2.25rem);
+  line-height: 1.05;
+}
+
+.metric-card span {
+  font-size: 0.84rem;
+}
+
+.workspace-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(0, 1.2fr) minmax(20rem, 0.8fr);
+}
+
+.tool-surface {
+  display: grid;
+  gap: 1rem;
+  min-height: 20rem;
+  padding: 1rem;
+}
+
+.allocation-layout {
+  align-items: center;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+}
+
+#allocationChart {
+  height: auto;
+  max-width: 100%;
+}
+
+.allocation-table {
+  display: grid;
+  gap: 0.45rem;
+}
+
+.table-head,
+.allocation-row {
+  align-items: center;
+  display: grid;
+  gap: 0.5rem;
+  grid-template-columns: minmax(7rem, 1fr) 4.5rem 4.5rem;
+}
+
+.table-head {
+  color: var(--muted);
+  font-size: 0.74rem;
+  font-weight: 850;
+  text-transform: uppercase;
+}
+
+.allocation-row {
+  border-top: 1px solid #edf1ee;
+  font-size: 0.9rem;
+  padding-top: 0.55rem;
+}
+
+.asset-name {
+  align-items: center;
+  display: flex;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.swatch {
+  border-radius: 3px;
+  display: inline-block;
+  flex: 0 0 auto;
+  height: 0.8rem;
+  width: 0.8rem;
+}
+
+.scenario-list,
+.move-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.scenario-item,
+.move-item {
+  background: #f8fbf8;
+  border: 1px solid #e6eee8;
+  border-radius: var(--radius);
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.8rem;
+}
+
+.scenario-top,
+.move-top {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.scenario-top strong,
+.move-top strong {
+  font-size: 0.92rem;
+}
+
+.scenario-top span,
+.move-top span {
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 800;
+  text-align: right;
+}
+
+.bar-track {
+  background: #e5ece8;
+  border-radius: 999px;
+  height: 0.58rem;
+  overflow: hidden;
+}
+
+.bar-fill {
+  background: var(--accent);
+  border-radius: inherit;
+  height: 100%;
+  min-width: 0.35rem;
+}
+
+.move-item.buy .bar-fill,
+.positive {
+  background: var(--green);
+}
+
+.move-item.sell .bar-fill,
+.negative {
+  background: var(--red);
+}
+
+.insight-surface {
+  min-height: 16rem;
+}
+
+.insight-list {
+  display: grid;
+  gap: 0.7rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.insight-list li {
+  border-left: 4px solid var(--accent);
+  background: #f8fbf8;
+  border-radius: 0 var(--radius) var(--radius) 0;
+  color: #35423a;
+  line-height: 1.45;
+  padding: 0.75rem 0.85rem;
+}
+
+.export-dialog {
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  box-shadow: 0 30px 90px rgba(0, 0, 0, 0.28);
+  max-width: min(46rem, calc(100vw - 2rem));
+  padding: 1rem;
+  width: 46rem;
+}
+
+.export-dialog::backdrop {
+  background: rgba(10, 18, 14, 0.45);
+}
+
+.export-dialog form {
+  display: grid;
+  gap: 1rem;
+}
+
+textarea {
+  min-height: 24rem;
+  padding: 1rem;
+  resize: vertical;
+  width: 100%;
+}
+
+footer {
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding: 0 2rem 2rem;
+  text-align: center;
+}
+
+@media (max-width: 1100px) {
+  .app-shell,
+  .workspace-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .planner-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 760px) {
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .topbar-actions,
+  .primary-button {
+    width: 100%;
+  }
+
+  .primary-button {
+    justify-content: center;
+  }
+
+  .metric-grid,
+  .control-grid,
+  .allocation-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .metric-card {
+    min-height: 7.2rem;
+  }
+
+  .table-head,
+  .allocation-row {
+    grid-template-columns: minmax(6rem, 1fr) 4rem 4rem;
+  }
+}
+
+@media (max-width: 430px) {
+  .app-shell,
+  .topbar {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+  }
+
+  .segmented-control {
+    grid-template-columns: 1fr;
+  }
+
+  .scenario-top,
+  .move-top {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .scenario-top span,
+  .move-top span {
+    text-align: left;
+  }
+}

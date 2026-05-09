@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="A static investor workbench for portfolio allocation, retirement projections, scenario stress tests, and rebalancing guidance."
+    />
+    <title>Fidelity Investment Insights</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <p class="eyebrow">Investor Planning</p>
+        <h1>Fidelity Investment Insights</h1>
+      </div>
+      <div class="topbar-actions" aria-label="Workspace actions">
+        <button class="icon-button" id="resetButton" type="button" aria-label="Reset plan" title="Reset plan">
+          <svg aria-hidden="true" viewBox="0 0 24 24">
+            <path d="M4 7v6h6" />
+            <path d="M5.5 13a7 7 0 1 0 1.8-7.1L4 9" />
+          </svg>
+        </button>
+        <button class="primary-button" id="exportButton" type="button">Export plan</button>
+      </div>
+    </header>
+
+    <main class="app-shell">
+      <section class="planner-panel" aria-labelledby="profile-heading">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">Household</p>
+            <h2 id="profile-heading">Planning Inputs</h2>
+          </div>
+          <span class="status-pill" id="riskStatus">Balanced</span>
+        </div>
+
+        <form id="plannerForm" class="control-grid">
+          <label>
+            Age
+            <input id="age" name="age" type="number" min="18" max="80" step="1" value="34" />
+          </label>
+          <label>
+            Retirement Age
+            <input id="retirementAge" name="retirementAge" type="number" min="45" max="75" step="1" value="62" />
+          </label>
+          <label>
+            Current Portfolio
+            <input id="portfolioValue" name="portfolioValue" type="number" min="0" step="1000" value="184000" />
+          </label>
+          <label>
+            Monthly Contribution
+            <input id="monthlyContribution" name="monthlyContribution" type="number" min="0" step="50" value="1300" />
+          </label>
+          <label>
+            Annual Income
+            <input id="income" name="income" type="number" min="0" step="1000" value="132000" />
+          </label>
+          <label>
+            Retirement Goal
+            <input id="retirementGoal" name="retirementGoal" type="number" min="0" step="10000" value="1450000" />
+          </label>
+          <label>
+            Cash Reserve
+            <input id="cashReserve" name="cashReserve" type="number" min="0" step="500" value="26000" />
+          </label>
+          <label>
+            Monthly Expenses
+            <input id="monthlyExpenses" name="monthlyExpenses" type="number" min="0" step="100" value="6100" />
+          </label>
+        </form>
+
+        <div class="segmented-control" aria-label="Risk profile">
+          <button class="segment" type="button" data-risk="conservative">Conservative</button>
+          <button class="segment is-active" type="button" data-risk="balanced">Balanced</button>
+          <button class="segment" type="button" data-risk="growth">Growth</button>
+        </div>
+
+        <div class="slider-row">
+          <label for="expectedReturn">Expected annual return</label>
+          <div class="slider-control">
+            <input id="expectedReturn" name="expectedReturn" type="range" min="3" max="10" step="0.25" value="6.5" />
+            <output id="expectedReturnOutput" for="expectedReturn">6.5%</output>
+          </div>
+        </div>
+        <div class="slider-row">
+          <label for="inflation">Inflation assumption</label>
+          <div class="slider-control">
+            <input id="inflation" name="inflation" type="range" min="1" max="6" step="0.25" value="2.75" />
+            <output id="inflationOutput" for="inflation">2.75%</output>
+          </div>
+        </div>
+      </section>
+
+      <section class="dashboard" aria-label="Plan dashboard">
+        <div class="metric-grid">
+          <article class="metric-card">
+            <p>Projected at Retirement</p>
+            <strong id="projectedValue">$0</strong>
+            <span id="projectionDelta">On track</span>
+          </article>
+          <article class="metric-card">
+            <p>Readiness Score</p>
+            <strong id="readinessScore">0</strong>
+            <span id="readinessCopy">Needs review</span>
+          </article>
+          <article class="metric-card">
+            <p>Monthly Gap</p>
+            <strong id="monthlyGap">$0</strong>
+            <span>Extra contribution estimate</span>
+          </article>
+          <article class="metric-card">
+            <p>Cash Runway</p>
+            <strong id="cashRunway">0 mo</strong>
+            <span id="cashRunwayCopy">Emergency reserve</span>
+          </article>
+        </div>
+
+        <div class="workspace-grid">
+          <section class="tool-surface allocation-surface" aria-labelledby="allocation-heading">
+            <div class="surface-heading">
+              <div>
+                <p class="eyebrow">Portfolio</p>
+                <h2 id="allocation-heading">Allocation Map</h2>
+              </div>
+              <span class="status-pill neutral" id="rebalanceStatus">Review</span>
+            </div>
+            <div class="allocation-layout">
+              <canvas id="allocationChart" width="260" height="260" aria-label="Current allocation chart"></canvas>
+              <div class="allocation-table" role="table" aria-label="Current and target allocation">
+                <div role="row" class="table-head">
+                  <span role="columnheader">Asset</span>
+                  <span role="columnheader">Current</span>
+                  <span role="columnheader">Target</span>
+                </div>
+                <div id="allocationRows"></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="tool-surface" aria-labelledby="scenario-heading">
+            <div class="surface-heading">
+              <div>
+                <p class="eyebrow">Scenarios</p>
+                <h2 id="scenario-heading">Stress Test</h2>
+              </div>
+            </div>
+            <div class="scenario-list" id="scenarioList"></div>
+          </section>
+
+          <section class="tool-surface" aria-labelledby="moves-heading">
+            <div class="surface-heading">
+              <div>
+                <p class="eyebrow">Actions</p>
+                <h2 id="moves-heading">Rebalancing Moves</h2>
+              </div>
+            </div>
+            <div class="move-list" id="moveList"></div>
+          </section>
+
+          <section class="tool-surface insight-surface" aria-labelledby="insights-heading">
+            <div class="surface-heading">
+              <div>
+                <p class="eyebrow">Advisor Notes</p>
+                <h2 id="insights-heading">Priority Insights</h2>
+              </div>
+            </div>
+            <ul class="insight-list" id="insightList"></ul>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <dialog id="exportDialog" class="export-dialog">
+      <form method="dialog">
+        <div class="surface-heading">
+          <div>
+            <p class="eyebrow">Snapshot</p>
+            <h2>Exported Plan</h2>
+          </div>
+          <button class="icon-button" value="cancel" aria-label="Close exported plan" title="Close">
+            <svg aria-hidden="true" viewBox="0 0 24 24">
+              <path d="M18 6 6 18" />
+              <path d="m6 6 12 12" />
+            </svg>
+          </button>
+        </div>
+        <textarea id="exportText" readonly></textarea>
+      </form>
+    </dialog>
+
+    <footer>
+      Educational planning prototype. Not affiliated with Fidelity Investments and not financial advice.
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
